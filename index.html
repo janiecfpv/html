@@ -1,270 +1,248 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>www.wojtech.pl</title>
-    <style>
-        /* Globalne style */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Courier New', monospace;
-            color: #fff;
-            background: #000;
-        }
+/* Globalne style */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Courier New', monospace;
+    color: #fff;
+    background: #000;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
 
-        /* Animowane gradientowe tło */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #00f, #0ff, #f0f, #ff0, #f00);
-            background-size: 300% 300%;
-            z-index: -1;
-            animation: gradientAnimation 10s ease infinite;
-        }
+/* Animowane gradientowe tło */
+body::before {
+    content: '';
+    position: fixed; /* Fixed to stay in place during scroll */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #00f, #0ff, #f0f, #ff0, #f00);
+    background-size: 300% 300%;
+    z-index: -1;
+    animation: gradientAnimation 10s ease infinite;
+}
 
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-        /* Pulsujące efekty dla nagłówka */
-        h1 {
-            font-size: 5rem;
-            text-transform: uppercase;
-            letter-spacing: 10px;
-            text-align: center;
-            color: #00ffcc;
-            animation: pulseText 2s infinite;
-        }
+/* Pulsujące efekty dla nagłówka */
+h1 {
+    font-size: 5rem;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    text-align: center;
+    color: #00ffcc;
+    animation: pulseText 2s infinite;
+}
 
-        @keyframes pulseText {
-            0% { text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc; }
-            50% { text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc, 0 0 50px #00ffcc; }
-            100% { text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc; }
-        }
+@keyframes pulseText {
+    0% { text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc; }
+    50% { text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc, 0 0 50px #00ffcc; }
+    100% { text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc; }
+}
 
-        /* Stylizacja tekstu wprowadzającego */
-        p {
-            font-size: 1.5rem;
-            text-align: center;
-            margin: 20px auto;
-            width: 70%;
-            color: #fff;
-            max-width: 800px;
-            line-height: 1.6;
-        }
+/* Stylizacja tekstu wprowadzającego */
+p {
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 20px auto;
+    width: 80%; /* Adjust width for better responsiveness */
+    color: #fff;
+    max-width: 800px;
+    line-height: 1.6;
+}
 
-        /* Stylizacja przycisków */
-        .btn {
-            display: inline-block;
-            padding: 15px 30px;
-            font-size: 1.5rem;
-            color: #000;
-            background: #00ffcc;
-            border: none;
-            cursor: pointer;
-            border-radius: 10px;
-            margin: 10px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
-        }
+/* Stylizacja przycisków */
+.btn {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    color: #000;
+    background: #00ffcc;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    margin: 10px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+}
 
-        .btn:hover {
-            color: #00ffcc;
-            background: transparent;
-            border: 2px solid #00ffcc;
-            box-shadow: 0 0 30px #00ffcc, 0 0 40px #00ffcc;
-        }
+.btn:hover {
+    color: #00ffcc;
+    background: transparent;
+    border: 2px solid #00ffcc;
+    box-shadow: 0 0 30px #00ffcc, 0 0 40px #00ffcc;
+}
 
-        /* Pozycjonowanie treści na środku */
-        .content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
+/* Pozycjonowanie treści na środku */
+.content {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 0 20px; /* Add padding to prevent text from touching edges on small screens */
+}
 
-        /* Sekcja kontaktowa */
-        .contact-section {
-            position: absolute;
-            top: 100vh;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 800px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 0 20px #00ffcc;
-        }
+/* Sekcja kontaktowa */
+.contact-section {
+    position: relative;
+    top: 100vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 800px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 20px #00ffcc;
+}
 
-        .contact-section h2 {
-            color: #00ffcc;
-            margin-bottom: 20px;
-        }
+.contact-section h2 {
+    color: #00ffcc;
+    margin-bottom: 20px;
+}
 
-        .contact-details {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-        }
+.contact-details {
+    display: flex;
+    flex-direction: column; /* Stack details vertically for smaller screens */
+    align-items: center;
+    margin: 20px 0;
+}
 
-        .contact-details div {
-            flex: 1;
-            padding: 10px;
-        }
+.contact-details div {
+    margin: 10px;
+    text-align: center; /* Center text in divs */
+}
 
-        .contact-details a {
-            color: #00ffcc;
-            text-decoration: none;
-            font-size: 1.2rem;
-            display: block;
-            margin: 10px 0;
-            transition: color 0.3s;
-        }
+.contact-details a {
+    color: #00ffcc;
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: block;
+    margin: 10px 0;
+    transition: color 0.3s;
+}
 
-        .contact-details a:hover {
-            color: #ff00ff;
-        }
+.contact-details a:hover {
+    color: #ff00ff;
+}
 
-        /* Stylizacja formularza kontaktowego */
-        form {
-            display: flex;
-            flex-direction: column;
-        }
+/* Stylizacja formularza kontaktowego */
+form {
+    display: flex;
+    flex-direction: column;
+}
 
-        form input, form textarea {
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
+form input, form textarea {
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+}
 
-        form button {
-            padding: 10px;
-            font-size: 1.2rem;
-            background-color: #00ffcc;
-            color: #000;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+form button {
+    padding: 10px;
+    font-size: 1.2rem;
+    background-color: #00ffcc;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-        form button:hover {
-            background-color: #ff00ff;
-        }
+form button:hover {
+    background-color: #ff00ff;
+}
 
-        /* Sekcja usług */
-        .services-section {
-            position: absolute;
-            top: 200vh;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 1000px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 0 20px #00ffcc;
-        }
+/* Sekcja usług */
+.services-section {
+    position: relative;
+    top: 200vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1000px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 20px #00ffcc;
+}
 
-        .services-section h2 {
-            color: #00ffcc;
-            margin-bottom: 20px;
-        }
+.services-section h2 {
+    color: #00ffcc;
+    margin-bottom: 20px;
+}
 
-        .service-item {
-            margin: 20px 0;
-        }
+.service-item {
+    margin: 20px 0;
+}
 
-        .service-item h3 {
-            color: #ff00ff;
-        }
+.service-item h3 {
+    color: #ff00ff;
+}
 
-        .service-item p {
-            font-size: 1.2rem;
-            line-height: 1.5;
-        }
-    </style>
-</head>
-<body>
+.service-item p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
 
-    <!-- Zawartość strony -->
-    <div class="content">
-        <h1>WOJTECH Repair</h1>
-        <p>Witaj w miejscu gdzie przyszłość spotyka się z teraźniejszością. Specjalizuje się w naprawach telefonów i komputerów z użyciem najnowocześniejszych technologii.</p>
-        <a href="#contact" class="btn">Skontaktuj się</a>
-        <a href="#services" class="btn">Usługi</a>
-    </div>
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 3rem;
+        letter-spacing: 5px;
+    }
 
-    <!-- Sekcja kontaktowa -->
-    <div class="contact-section" id="contact">
-        <h2>Kontakt</h2>
+    .btn {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
 
-        <!-- Dane kontaktowe -->
-        <div class="contact-details">
-            <div>
-                <strong>Telefon:</strong>
-                <a href="tel:+48123456789">+48 789 229 450</a>
-            </div>
-            <div>
-                <strong>Email:</strong>
-                <a href="mailto:kontakt@futuretech.pl">prooosty@gmail.com</a>
-            </div>
-            <div>
-                <strong>Adres:</strong>
-                <p>Lubochnia Ul. Tomaszowska 23a</p>
-            </div>
-        </div>
+    p {
+        font-size: 1.2rem;
+        width: 90%;
+    }
 
-        <!-- Formularz kontaktowy -->
-        <form action="#" method="post">
-            <input type="text" name="name" placeholder="Twoje imię" required>
-            <input type="email" name="email" placeholder="Twój email" required>
-            <textarea name="message" rows="5" placeholder="Wiadomość" required></textarea>
-            <button type="submit">Wyślij</button>
-        </form>
-    </div>
+    .contact-details {
+        flex-direction: column;
+    }
 
-    <!-- Sekcja usług -->
-    <div class="services-section" id="services">
-        <h2>Nasze Usługi</h2>
+    .contact-details div {
+        margin: 10px 0;
+    }
+}
 
-        <div class="service-item">
-            <h3>Naprawa telefonów</h3>
-            <p>Oferujemy szeroki zakres usług naprawy telefonów, w tym wymianę uszkodzonego ekranu, naprawy baterii, usunięcie usterek związanych z oprogramowaniem, a także naprawy portów ładowania oraz problemów z dźwiękiem.</p>
-        </div>
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
 
-        <div class="service-item">
-            <h3>Naprawa komputerów</h3>
-            <p>Nasze usługi naprawy komputerów obejmują zarówno komputery stacjonarne, jak i laptopy. Specjalizujemy się w diagnozowaniu i naprawie usterek sprzętowych, wymianie komponentów, usuwaniu wirusów, instalacji nowego oprogramowania oraz optymalizacji systemu.</p>
-        </div>
+    .btn {
+        font-size: 1rem;
+        padding: 8px 16px;
+    }
 
-        <div class="service-item">
-            <h3>Rozbudowa i modernizacja sprzętu</h3>
-            <p>Chcesz unowocześnić swój sprzęt? Oferujemy usługi rozbudowy pamięci RAM, wymiany dysków twardych na SSD, modernizację kart graficznych oraz inne prace związane z poprawą wydajności komputerów.</p>
-        </div>
+    p {
+        font-size: 1rem;
+        width: 95%;
+    }
 
-        <div class="service-item">
-            <h3>Odzyskiwanie danych</h3>
-            <p>Jeśli straciłeś ważne dane, nasi specjaliści pomogą Ci je odzyskać. Oferujemy usługi odzyskiwania danych z dysków twardych, nośników zewnętrznych, telefonów oraz innych urządzeń pamięci masowej.</p>
-        </div>
+    .contact-details div {
+        font-size: 0.9rem;
+    }
 
-    </div>
-
-</body>
-</html>
+    .service-item p {
+        font-size: 1rem;
+    }
+}
