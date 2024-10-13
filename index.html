@@ -50,7 +50,7 @@
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
-            flex-wrap: wrap; /* Allow wrapping of widgets */
+            flex-wrap: wrap;
         }
 
         .widget {
@@ -58,12 +58,12 @@
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            width: calc(50% - 10px); /* Two widgets in a row */
-            margin-bottom: 20px; /* Space below each widget */
+            width: calc(33% - 10px); /* Three widgets in a row */
+            margin-bottom: 20px;
             color: #333;
         }
 
-        #map, #cyber-map {
+        #map {
             width: 100%;
             height: 300px;
             border-radius: 10px;
@@ -91,12 +91,12 @@
         .contact-details {
             display: flex;
             flex-direction: column;
-            gap: 15px; /* Space between contact items */
+            gap: 15px;
             margin-bottom: 20px;
         }
 
         .contact-item {
-            background-color: #f9f9f9; /* Light background for contrast */
+            background-color: #f9f9f9;
             border-radius: 5px;
             padding: 10px;
         }
@@ -116,7 +116,7 @@
         .contact-form {
             display: flex;
             flex-direction: column;
-            gap: 15px; /* Space between form elements */
+            gap: 15px;
         }
 
         input, textarea {
@@ -138,7 +138,7 @@
             }
 
             .widget {
-                width: 100%; /* Full width on smaller screens */
+                width: 100%;
             }
 
             .contact-details {
@@ -197,12 +197,7 @@
             </div>
         </div>
 
-        <!-- Widżety na dole strony -->
         <div class="widget-container">
-            <div class="widget">
-                <h2>Mapa Cyberataków</h2>
-                <iframe id="cyber-map" width="420" height="420" src="https://cybermap.kaspersky.com/en/widget/dynamic/dark" frameborder="0"></iframe>
-            </div>
             <div class="widget">
                 <h2>Zegar i Mapa Świata</h2>
                 <div class="location">Lokalizacja: Polska, Woj. Łódzkie</div>
@@ -297,7 +292,6 @@
         </div>
     </div>
 
-    <!-- Mapy i Zegar -->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
     <script src="https://widget.vpn.com/vpn-widget.js"></script>
     <script>
