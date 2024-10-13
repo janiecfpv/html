@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>www.wojtech.pl</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <style>
         body, html {
             margin: 0;
@@ -45,81 +46,108 @@
             background-color: #008f5b;
         }
 
+        .widget-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            flex-wrap: wrap; /* Allow wrapping of widgets */
+        }
+
+        .widget {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            width: calc(50% - 10px); /* Two widgets in a row */
+            margin-bottom: 20px; /* Space below each widget */
+            color: #333;
+        }
+
+        #map, #cyber-map {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .clock {
+            font-size: 2em;
+            margin: 20px 0;
+            color: #00a86b;
+        }
+
+        .location {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .status {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
         .contact-details {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 15px; /* Space between contact items */
+            margin-bottom: 20px;
         }
 
-        .contact-details > div {
-            flex-basis: calc(33.333% - 10px);
-            margin-bottom: 10px;
+        .contact-item {
+            background-color: #f9f9f9; /* Light background for contrast */
+            border-radius: 5px;
+            padding: 10px;
         }
 
-        form {
+        .contact-details p {
+            margin: 5px 0;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .contact-details a {
+            text-decoration: none;
+            color: #00a86b;
+            font-weight: bold;
+        }
+
+        .contact-form {
             display: flex;
             flex-direction: column;
+            gap: 15px; /* Space between form elements */
         }
 
-        form input, form textarea {
-            margin-bottom: 10px;
+        input, textarea {
             padding: 10px;
-            border: 1px solid #ddd;
             border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        .stats-widget {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            width: 50px;
-            height: 50px;
-            transition: width 0.3s, height 0.3s;
-        }
-
-        .stats-widget.open {
-            width: 300px;
-            height: auto;
-        }
-
-        .stats-toggle {
-            width: 50px;
-            height: 50px;
-            background-color: #00a86b;
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .stats-content {
-            display: none;
-            padding-top: 10px;
-        }
-
-        .stats-widget.open .stats-content {
-            display: block;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .stat-item svg {
-            margin-right: 8px;
+        textarea {
+            resize: none;
         }
 
         @media (max-width: 768px) {
-            .contact-details > div {
-                flex-basis: 100%;
+            .widget-container {
+                flex-direction: column;
+            }
+
+            .widget {
+                width: 100%; /* Full width on smaller screens */
+            }
+
+            .contact-details {
+                flex-direction: column;
+            }
+
+            .contact-details div {
+                width: 100%;
+                margin-bottom: 15px;
             }
         }
     </style>
@@ -127,8 +155,8 @@
 <body>
     <div class="container">
         <div class="card">
-            <h1>WOJTECH Repair</h1>
-            <p>Witaj w miejscu gdzie przyszłość spotyka się z teraźniejszością. Specjalizujemy się w naprawach telefonów i komputerów z użyciem najnowocześniejszych technologii.</p>
+            <h1>WOJTECH</h1>
+            <p>Witaj w miejscu, gdzie przyszłość spotyka się z teraźniejszością. Specjalizuje się w naprawach telefonów i komputerów z użyciem najnowocześniejszych technologii.</p>
             <a href="#contact" class="btn">Skontaktuj się</a>
             <a href="#services" class="btn">Usługi</a>
         </div>
@@ -136,20 +164,20 @@
         <div class="card" id="contact">
             <h2>Kontakt</h2>
             <div class="contact-details">
-                <div>
+                <div class="contact-item">
                     <strong>Telefon:</strong>
                     <p><a href="tel:+48789229450">+48 789 229 450</a></p>
                 </div>
-                <div>
+                <div class="contact-item">
                     <strong>Email:</strong>
                     <p><a href="mailto:prooosty@gmail.com">prooosty@gmail.com</a></p>
                 </div>
-                <div>
+                <div class="contact-item">
                     <strong>Adres:</strong>
-                    <p>Lubochnia Ul. Tomaszowska 23a</p>
+                    <p>Lubochnia, ul. Tomaszowska 23a</p>
                 </div>
             </div>
-            <form action="#" method="post">
+            <form action="#" method="post" class="contact-form">
                 <input type="text" name="name" placeholder="Twoje imię" required>
                 <input type="email" name="email" placeholder="Twój email" required>
                 <textarea name="message" rows="5" placeholder="Wiadomość" required></textarea>
@@ -158,50 +186,143 @@
         </div>
 
         <div class="card" id="services">
-            <h2>Usługi</h2>
+            <h2>Nasze Usługi</h2>
             <div>
                 <h3>Naprawa telefonów</h3>
                 <p>Oferuje szeroki zakres usług naprawy telefonów, w tym wymianę uszkodzonego ekranu, naprawy baterii, usunięcie usterek związanych z oprogramowaniem, a także naprawy portów ładowania oraz problemów z dźwiękiem.</p>
             </div>
             <div>
                 <h3>Naprawa komputerów</h3>
-                <p>Moje usługi naprawy komputerów obejmują zarówno komputery stacjonarne, jak i laptopy. Specjalizuje się w diagnozowaniu i naprawie usterek sprzętowych, wymianie komponentów, usuwaniu wirusów, instalacji nowego oprogramowania oraz optymalizacji systemu.</p>
+                <p>Moje naprawy komputerów obejmują zarówno komputery stacjonarne, jak i laptopy. Specjalizujemy się w diagnozowaniu i naprawie usterek sprzętowych, wymianie komponentów, usuwaniu wirusów, instalacji nowego oprogramowania oraz optymalizacji systemu.</p>
+            </div>
+        </div>
+
+        <!-- Widżety na dole strony -->
+        <div class="widget-container">
+            <div class="widget">
+                <h2>Mapa Cyberataków</h2>
+                <iframe id="cyber-map" width="420" height="420" src="https://cybermap.kaspersky.com/en/widget/dynamic/dark" frameborder="0"></iframe>
+            </div>
+            <div class="widget">
+                <h2>Zegar i Mapa Świata</h2>
+                <div class="location">Lokalizacja: Polska, Woj. Łódzkie</div>
+                <div id="clock" class="clock"></div>
+                <div id="map"></div>
+                <div class="status">Status: Online</div>
+            </div>
+            <div class="widget">
+                <h2>Typ Urządzenia</h2>
+                <div class="vpn-widget" type="geoip/device-type"></div>
+            </div>
+            <div class="widget">
+                <h2>Lokalizacja</h2>
+                <div class="vpn-widget" type="geoip/location"></div>
+            </div>
+            <div class="widget">
+                <h2>Test Prędkości</h2>
+                <div class="vpn-widget" type="speed/speedtest"></div>
+            </div>
+            <div class="widget">
+                <h2>DNS Records</h2>
+                <div class="vpn-widget" type="domain/dns"></div>
+            </div>
+            <div class="widget">
+                <h2>DNS Lookup</h2>
+                <div class="vpn-widget" type="geoip/dns"></div>
+            </div>
+            <div class="widget">
+                <h2>Adres IP</h2>
+                <div class="vpn-widget" type="geoip/ip"></div>
+            </div>
+            <div class="widget">
+                <h2>Pogoda</h2>
+                <div class="vpn-widget" type="weather/current"></div>
+            </div>
+            <div class="widget">
+                <h2>Kod Pocztowy</h2>
+                <div class="vpn-widget" type="geoip/zipcode"></div>
+            </div>
+            <div class="widget">
+                <h2>Miasto</h2>
+                <div class="vpn-widget" type="geoip/city"></div>
+            </div>
+            <div class="widget">
+                <h2>Kontynent</h2>
+                <div class="vpn-widget" type="geoip/continent"></div>
+            </div>
+            <div class="widget">
+                <h2>Kraj</h2>
+                <div class="vpn-widget" type="geoip/country"></div>
+            </div>
+            <div class="widget">
+                <h2>Waluta</h2>
+                <div class="vpn-widget" type="geoip/currency"></div>
+            </div>
+            <div class="widget">
+                <h2>Dokładna Lokalizacja</h2>
+                <div class="vpn-widget" type="geoip/exact-location"></div>
+            </div>
+            <div class="widget">
+                <h2>ISP</h2>
+                <div class="vpn-widget" type="geoip/isp"></div>
+            </div>
+            <div class="widget">
+                <h2>OS</h2>
+                <div class="vpn-widget" type="geoip/os"></div>
+            </div>
+            <div class="widget">
+                <h2>Region</h2>
+                <div class="vpn-widget" type="geoip/region"></div>
+            </div>
+            <div class="widget">
+                <h2>Strefa Czasowa</h2>
+                <div class="vpn-widget" type="geoip/time-zone"></div>
+            </div>
+            <div class="widget">
+                <h2>Alerty Pogodowe</h2>
+                <div class="vpn-widget" type="weather/national-alerts"></div>
+            </div>
+            <div class="widget">
+                <h2>Prognoza Godzinowa</h2>
+                <div class="vpn-widget" type="weather/forecast-1hour"></div>
+            </div>
+            <div class="widget">
+                <h2>Prognoza Dzienna</h2>
+                <div class="vpn-widget" type="weather/forecast"></div>
+            </div>
+            <div class="widget">
+                <h2>WHOIS Lookup</h2>
+                <div class="vpn-widget" type="domain/whois"></div>
             </div>
         </div>
     </div>
 
-    <!-- Statystyki odwiedzin -->
-    <div id="statsWidget" class="stats-widget">
-        <button id="statsToggle" class="stats-toggle">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-        </button>
-        <div class="stats-content">
-            <h3>Statystyki odwiedzin</h3>
-            <div class="stat-item">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-                <span>Odwiedziny: <span id="visitorCount">1337</span></span>
-            </div>
-            <div class="stat-item">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                <span>Ostatnia wizyta: <span id="lastVisit">2024-10-13 15:30</span></span>
-            </div>
-            <div class="stat-item">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                <span>Najczęstszy kraj: <span id="topCountry">Polska</span></span>
-            </div>
-        </div>
-    </div>
-
+    <!-- Mapy i Zegar -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://widget.vpn.com/vpn-widget.js"></script>
     <script>
-        const statsWidget = document.getElementById('statsWidget');
-        const statsToggle = document.getElementById('statsToggle');
+        // Zegar lokalny
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('clock').textContent = timeString;
+        }
 
-        statsToggle.addEventListener('click', function() {
-            statsWidget.classList.toggle('open');
-        });
+        setInterval(updateClock, 1000);
+        updateClock();
 
-        // Poniżej można dodać kod do dynamicznego pobierania statystyk
-        // np. poprzez API lub backend
+        // Mapa Leaflet.js
+        var map = L.map('map').setView([51.7592, 19.4560], 7); // Polska, woj. łódzkie
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker = L.marker([51.7592, 19.4560]).addTo(map);
+        marker.bindPopup("<b>Polska, Woj. Łódzkie</b>").openPopup();
     </script>
 </body>
 </html>
